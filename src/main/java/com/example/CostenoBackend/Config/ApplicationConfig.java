@@ -1,5 +1,5 @@
 package com.example.CostenoBackend.Config;
-
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +18,8 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-      private final UserRepository userRepository;
+    
+    private final UserRepository userRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
@@ -46,3 +47,4 @@ public class ApplicationConfig {
         .orElseThrow(()-> new UsernameNotFoundException("User not fournd"));
     }
 }
+*/

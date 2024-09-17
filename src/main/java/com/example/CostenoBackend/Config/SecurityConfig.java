@@ -1,5 +1,5 @@
 package com.example.CostenoBackend.Config;
-
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.example.CostenoBackend.Jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 @Configuration
@@ -45,4 +43,4 @@ public class SecurityConfig {
             
     }
 
-}
+}*/
