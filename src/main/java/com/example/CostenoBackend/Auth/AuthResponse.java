@@ -1,4 +1,4 @@
-package com.example.CostenoBackend.Auth;
+/*package com.example.CostenoBackend.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,3 +12,4 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     String token;
 }
+*/

@@ -1,4 +1,4 @@
-package com.example.CostenoBackend.Auth;
+/*package com.example.CostenoBackend.Auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.CostenoBackend.Jwt.JwtService;
-import com.example.CostenoBackend.User.Persona;
+import com.example.CostenoBackend.Config.JwtService;
+import com.example.CostenoBackend.Models.Persona;
 import com.example.CostenoBackend.User.User;
 import com.example.CostenoBackend.User.UserRepository;
 
@@ -50,4 +50,4 @@ public class AuthService {
         
     }
 
-}
+}*/
