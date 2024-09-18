@@ -6,6 +6,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "chofer")
+@PrimaryKeyJoinColumn(name = "idPersona")
 public class Chofer extends Empleado{
     
     @Column(name = "liceConducir")
@@ -18,4 +19,7 @@ public class Chofer extends Empleado{
     private String estado;
 
     //falta agregar la fk de admin
+    @ManyToOne
+    @JoinColumn(name = "idAdministrador", referencedColumnName = "idPersona")
+    private Administrador administrador;
 }

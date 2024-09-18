@@ -1,11 +1,10 @@
 package com.example.CostenoBackend.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="administrador")
+@PrimaryKeyJoinColumn(name = "idPersona")
 public class Administrador extends Empleado{
 
     @Column(name = "correo")

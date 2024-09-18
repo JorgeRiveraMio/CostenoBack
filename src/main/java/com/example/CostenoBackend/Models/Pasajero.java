@@ -9,6 +9,7 @@ public class Pasajero{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "idPasajero")
     private Integer idPasajero;
     
     @Column(name = "numDocumento")
@@ -23,5 +24,8 @@ public class Pasajero{
     @Column(name = "fecNacimiento")
     private Date fecNacimiento;
 
-    //falta agregar el fk de boleto
+    //fk boleto
+    @ManyToOne
+    @JoinColumn(name = "idBoleto", referencedColumnName = "idBoleto")
+    private Boleto boleto;
 }

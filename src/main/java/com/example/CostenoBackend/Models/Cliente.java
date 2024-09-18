@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cliente")
+@PrimaryKeyJoinColumn(name = "idPersona")//aseguramos que sepa que idPersona es la fk
 public class Cliente extends Persona {
 
     @Column(name = "correo")
@@ -13,6 +14,7 @@ public class Cliente extends Persona {
     @Column(name = "password")
     private String password;
 
+    //fk de estado de cliente
     @ManyToOne
     @JoinColumn(name = "idEstadoCliente", referencedColumnName = "idEstadoCliente")
     private EstadoCliente estadoCliente;
