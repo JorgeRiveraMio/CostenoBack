@@ -5,14 +5,14 @@ import com.example.CostenoBackend.Infra.MailManager;
 
 @Service
 public class Authenticate {
-    
-    MailManager mailManager;
+
+    private final MailManager mailManager;
 
     public Authenticate(MailManager mailManager) {
         this.mailManager = mailManager;
     }
 
-    public void sendMessageUser(String email){
-        mailManager.sendMessage(email);
+    public String sendMessageUser(String email) {
+        return mailManager.sendMessage(email);  // Retorna el código de verificación
     }
 }

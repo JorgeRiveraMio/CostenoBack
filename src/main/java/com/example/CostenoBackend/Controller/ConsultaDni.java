@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.CostenoBackend.Services.ReniecService;
 
 @RestController
+@CrossOrigin("*")
 public class ConsultaDni {
 
     private final ReniecService reniecService;
@@ -15,7 +16,7 @@ public class ConsultaDni {
     public ConsultaDni(ReniecService reniecService) {
         this.reniecService = reniecService;
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/consultar-dni")
     public String consultarDNI(@RequestParam String dni) {
         return reniecService.consultarDNI(dni);
