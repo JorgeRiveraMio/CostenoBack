@@ -1,73 +1,70 @@
-
-
 package com.example.CostenoBackend.Config;
-/* 
+
 import java.io.IOException;
 
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.util.StringUtils;
 
-//import io.micrometer.common.util.StringUtils;
+import com.example.CostenoBackend.Services.Impl.UserDetailsServiceImpl;
+
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
-    private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private JwtService jwtUtil;
+
+    // vamos a interceptar la solicitud y validar si el token es valido 
+    @SuppressWarnings("null")
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-     
-                final String token=getTokenFromRequest(request);
-                final String username;
-                if (token ==null) {
-                    filterChain.doFilter(request, response);
-                    return;
-                }
-                username=jwtService.getUsernameFromToken(token);
-         if (username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
-        {
-            UserDetails userDetails=userDetailsService.loadUserByUsername(username);
-
-            if (jwtService.isTokenValid(token, userDetails))
-            {
-                UsernamePasswordAuthenticationToken authToken= new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities());
-
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String requestTokenHeader = request.getHeader("Authorization");//obtiene el encabezado de la solicitud HTTP que contiene el token 
+        String username = null;
+        String jwtToken = null;
+    
+        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) { //verifica que el token comience con la palabra bearer, ya que es un formato de autorizacion
+            jwtToken = requestTokenHeader.substring(7);//si empieza con bearer, pues procedemos a eliminar eso para que solo pase el token
+    
+            try {
+                username = this.jwtUtil.getUsernameFromToken(jwtToken);//obtiene el nombre de usuario del token 
+            } catch (ExpiredJwtException exception) {
+                System.out.println("El token ha expirado");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
+        } else {
+            System.out.println("Token inválido, no empieza con 'Bearer' string");
         }
-                filterChain.doFilter(request, response);
-    }
-
-    private String getTokenFromRequest(HttpServletRequest request) {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        
-        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7); // Devuelve el token sin "Bearer "
+    
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) { // si el usuario es nulo o no esta autenticado
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);//se cargan los datos del usuario desde la bd 
+            if (this.jwtUtil.isTokenValid(jwtToken, userDetails)) { //se valida el token 
+                //si el token es correcto entonces se crea un usernamePasswordAuthenticationToken para que sea enviado a SecurityContextHolder
+                //y spring security reconozca que el usuario esta autenticado
+                //esas funciones mencionadas anteriormente son de spring security, no fueron creadas por nosotros 
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        } else {
+            System.out.println("El token no es válido");
         }
-        
-        return null; // Si no cumple con el formato esperado, retorna null
+        //si todo es correo, se sigue con el flujo 
+        //valida el token y luego al usuario con el spring security
+        filterChain.doFilter(request, response);
     }
-    
-    
 }
-*/
