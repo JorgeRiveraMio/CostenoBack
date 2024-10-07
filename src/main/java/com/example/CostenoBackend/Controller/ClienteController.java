@@ -12,6 +12,7 @@ import com.example.CostenoBackend.Domain.Authenticate;
 import com.example.CostenoBackend.Models.Cliente;
 import com.example.CostenoBackend.Services.ClienteService;
 
+
 @RestController
 @RequestMapping("/cliente")
 @CrossOrigin("*")
@@ -81,4 +82,30 @@ public class ClienteController {
             return ResponseEntity.badRequest().body(response);
         }
     }    
+
+    @PutMapping("path/{id}")
+    public String actualizarPorId(@PathVariable Integer id, @RequestBody Cliente nuevo) {
+        String mensaje;
+
+        Cliente actual = this.clienteService.Obtener(id);
+        if (actual != null) {
+            // Encriptar la nueva contraseña
+            String passwordEncriptado = passwordEncoder.encode(nuevo.getPassword());
+          
+            actual.setEstadoCivil(nuevo.getEstadoCivil());
+            actual.setDireccion(nuevo.getDireccion());
+            actual.setNumTel(nuevo.getNumTel());
+            actual.setFechaNac(nuevo.getFechaNac());
+            actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
+            
+            this.clienteService.Guardar(actual);
+            mensaje = "Cliente actualizado correctamente"; // Mensaje de éxito
+        } else {
+            mensaje = "No se pudo actualizar el cliente"; // Mensaje de error
+        }
+
+        return mensaje; // Retorna el mensaje
+    }
+
+    
 }

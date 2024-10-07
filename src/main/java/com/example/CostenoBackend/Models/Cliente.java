@@ -42,6 +42,7 @@ public class Cliente extends Persona implements UserDetails{
         this.estadoCliente = estadoCliente;
     }
 
+    
     public String getCorreo() {
         return correo;
     }

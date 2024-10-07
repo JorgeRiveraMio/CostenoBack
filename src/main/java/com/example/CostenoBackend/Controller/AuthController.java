@@ -86,7 +86,7 @@ public class AuthController {
     }
 
     //metodo para mostrar al usuario que pudo iniciar sesion 
-    // PRINCIPAL es un objeto que contiene al usuario que fue autenticado, Spring Security se lo da automaticamente
+    
     @GetMapping("/actual-usuario")
     public ResponseEntity<?> obtenerUsuarioActual(Principal principal) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(principal.getName());//toma el nombre de usuario en nuestro caso el correo
