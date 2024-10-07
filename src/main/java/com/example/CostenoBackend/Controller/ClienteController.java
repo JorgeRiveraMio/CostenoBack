@@ -83,8 +83,8 @@ public class ClienteController {
         }
     }    
 
-    @PutMapping("path/{id}")
-    public String actualizarPorId(@PathVariable Integer id, @RequestBody Cliente nuevo) {
+    @PutMapping(path="/{id}")
+    public ResponseEntity<Object>  actualizarPorId(@PathVariable Integer id, @RequestBody Cliente nuevo) {
         String mensaje;
 
         Cliente actual = this.clienteService.Obtener(id);
@@ -104,8 +104,10 @@ public class ClienteController {
             mensaje = "No se pudo actualizar el cliente"; // Mensaje de error
         }
 
-        return mensaje; // Retorna el mensaje
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response);
     }
 
-    
+
 }
