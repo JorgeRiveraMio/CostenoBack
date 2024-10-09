@@ -35,6 +35,14 @@ public class ClienteController {
     // Enviar código de verificación al correo
     @PostMapping("/enviarCodigo")
     public ResponseEntity<Object> enviarCodigo(@RequestBody Cliente cliente) {
+        // Validar si el correo ya esta registrado 
+        if(clienteService.obtenerUsuario(cliente.getCorreo()) != null) {
+           
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "El correo ya está registrado.");
+            return ResponseEntity.badRequest().body(response);
+
+        }
         // Enviar el código al correo del cliente
         String code = authenticate.sendMessageUser(cliente.getCorreo());
     
@@ -90,13 +98,13 @@ public class ClienteController {
         Cliente actual = this.clienteService.Obtener(id);
         if (actual != null) {
             // Encriptar la nueva contraseña
-            String passwordEncriptado = passwordEncoder.encode(nuevo.getPassword());
+            // String passwordEncriptado = passwordEncoder.encode(nuevo.getPassword());
           
             actual.setEstadoCivil(nuevo.getEstadoCivil());
             actual.setDireccion(nuevo.getDireccion());
             actual.setNumTel(nuevo.getNumTel());
             actual.setFechaNac(nuevo.getFechaNac());
-            actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
+            // actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
             
             this.clienteService.Guardar(actual);
             mensaje = "Cliente actualizado correctamente"; // Mensaje de éxito
@@ -108,6 +116,28 @@ public class ClienteController {
         response.put("message", mensaje);
         return ResponseEntity.ok(response);
     }
+    @PutMapping(path="/cambiarContrasena")
+    public ResponseEntity<Object> actualizarContrasena(@RequestBody Map<String, String> datos) {
+    String mensaje;
+    String password = datos.get("password");
+    String correo = datos.get("correo");
+
+    Cliente actual = this.clienteService.obtenerUsuario(correo);
+    if (actual != null) {
+        // Encriptar la nueva contraseña
+        String passwordEncriptado = passwordEncoder.encode(password);
+        actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
+        
+        this.clienteService.Guardar(actual);
+        mensaje = "Cliente actualizó contraseña"; // Mensaje de éxito
+    } else {
+        mensaje = "No se pudo actualizar contraseña"; // Mensaje de error
+    }
+
+    Map<String, String> response = new HashMap<>();
+    response.put("message", mensaje);
+    return ResponseEntity.ok(response);
+}
 
 
 }

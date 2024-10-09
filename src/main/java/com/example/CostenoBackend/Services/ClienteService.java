@@ -28,7 +28,7 @@ public class ClienteService {
         return clienteRepository.findById(id).orElse(null);
     }
 
-    public Cliente obtenerUsuario(String correo) {
+    public  Cliente obtenerUsuario(String correo) {
         return clienteRepository.findByCorreo(correo);
     }
   
