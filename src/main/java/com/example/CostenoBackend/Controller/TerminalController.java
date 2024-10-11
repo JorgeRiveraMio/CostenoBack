@@ -74,4 +74,28 @@ public class TerminalController {
         response.put("message", mensaje);
         return ResponseEntity.ok(response);
         }
+        @PutMapping(path = "actualizarEstado/{id}")
+        public ResponseEntity<Object> actualizarEstado(@PathVariable Integer id) {
+            String mensaje;
+            Terminal actual = this.terminalService.Obtener(id);
+        
+            if (actual != null) {
+                if (actual.getEstado().equals("activo")) {  // Comparación correcta con equals()
+                    actual.setEstado("inactivo");
+                    mensaje = "El estado pasó a inactivo";
+                } else {
+                    actual.setEstado("activo");
+                    mensaje = "El estado pasó a activo";
+                }
+        
+                this.terminalService.guardar(actual);  // Guardar el estado actualizado
+            } else {
+                mensaje = "El estado no se actualizó correctamente";  // Mensaje de error
+            }
+        
+            // Crear un mapa para la respuesta
+            Map<String, String> response = new HashMap<>();
+            response.put("message", mensaje);
+            return ResponseEntity.ok(response);  // Retornar la respuesta con el mensaje
+        }
 }

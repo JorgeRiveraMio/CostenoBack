@@ -32,13 +32,17 @@ public class Terminal {
     @Column(name="coordenadaLongitud")
     private String coordenadaLongitud;
 
+    @Column(name="estado")
+    private String estado;
     
     public Terminal() {
     }
     
 
+ 
+
     public Terminal(Integer idTerminal, String nombre, String direccion, String departamento, String provincia,
-            String distrito, String coordenadaLatitud, String coordenadaLongitud) {
+            String distrito, String coordenadaLatitud, String coordenadaLongitud, String estado) {
         this.idTerminal = idTerminal;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -47,7 +51,10 @@ public class Terminal {
         this.distrito = distrito;
         this.coordenadaLatitud = coordenadaLatitud;
         this.coordenadaLongitud = coordenadaLongitud;
+        this.estado = estado;
     }
+
+
 
 
     public Integer getIdTerminal() {
@@ -112,6 +119,20 @@ public class Terminal {
 
     public void setCoordenadaLongitud(String coordenadaLongitud) {
         this.coordenadaLongitud = coordenadaLongitud;
+    }
+
+
+
+
+    public String getEstado() {
+        return estado;
+    }
+
+
+
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     
