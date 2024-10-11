@@ -19,4 +19,7 @@ public class TerminalService {
     public Terminal guardar(Terminal terminal){
         return terminalRepository.save(terminal);
     }
+    public Terminal Obtener(Integer id) {
+        return terminalRepository.findById(id).orElse(null);
+    }
 }
