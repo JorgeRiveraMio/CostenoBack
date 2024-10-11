@@ -5,11 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.CostenoBackend.Domain.Authenticate;
 import com.example.CostenoBackend.Models.Administrador;
 import com.example.CostenoBackend.Services.AdministradorService;
-import com.example.CostenoBackend.Services.ClienteService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

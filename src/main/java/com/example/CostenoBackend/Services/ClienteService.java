@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.CostenoBackend.Models.Cliente;
 import com.example.CostenoBackend.Repository.ClienteRepository;
 
-import jakarta.persistence.Column;
-
-
 @Service
 public class ClienteService {
     
@@ -31,5 +28,5 @@ public class ClienteService {
     public  Cliente obtenerUsuario(String correo) {
         return clienteRepository.findByCorreo(correo);
     }
-  
+
 }
