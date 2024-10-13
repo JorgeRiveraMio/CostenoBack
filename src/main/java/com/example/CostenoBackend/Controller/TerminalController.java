@@ -98,4 +98,5 @@ public class TerminalController {
             response.put("message", mensaje);
             return ResponseEntity.ok(response);  // Retornar la respuesta con el mensaje
         }
+        
 }
