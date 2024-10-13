@@ -16,7 +16,7 @@ public class Ruta {
     private Integer distancia;
 
     @Column(name = "duracion")
-    private Time duracion;
+    private String duracion;
 
     @Column(name = "estadoRuta")
     private String estadoRuta;
@@ -42,7 +42,7 @@ public class Ruta {
     }
     
 
-    public Ruta(Integer idRuta, Integer distancia, Time duracion, String estadoRuta, Terminal terminalOrigen,
+    public Ruta(Integer idRuta, Integer distancia, String duracion, String estadoRuta, Terminal terminalOrigen,
             Terminal terminalDestino, Administrador administrador) {
         this.idRuta = idRuta;
         this.distancia = distancia;
@@ -70,11 +70,11 @@ public class Ruta {
         this.distancia = distancia;
     }
 
-    public Time getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(Time duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
