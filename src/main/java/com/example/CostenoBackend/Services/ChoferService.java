@@ -21,14 +21,4 @@ public class ChoferService {
     public Chofer obtener(Integer id) {
         return choferRepository.findById(id).orElse(null);
     }
-
-    public Chofer cambiarEstado(Integer id, boolean nuevoEstado) {
-        Chofer choferExistente = choferRepository.findById(id).orElse(null);
-        if (choferExistente != null) {
-            choferExistente.setEstado(nuevoEstado);
-            return choferRepository.save(choferExistente);
-        }
-        return null;
-    }
-    
 }
