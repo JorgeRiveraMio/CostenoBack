@@ -1,6 +1,6 @@
 package com.example.CostenoBackend.Controller;
 
-import java.sql.Time;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,27 +39,7 @@ public class RutaController {
     @Autowired 
     private AdministradorService administradorService;
 
-    // public ResponseEntity<Object> registrar(@RequestBody Ruta ruta) {
-    //     if(ruta == null) {
-    //         Map<String, String> response = new HashMap<>();
-    //         response.put("message", "La ruta no se registró");
-    //         return ResponseEntity.badRequest().body(response);
-    //     }
-    //     System.out.println(ruta.getIdRuta());
-    //     this.rutaService.guardar(ruta);
-    //     Map<String, String> response = new HashMap<>();
-    //     response.put("message", "La ruta se registró correctamente");
-    //     return ResponseEntity.ok(response);
-    // }
-    //     @GetMapping("/listar")
-    //     public List<Ruta> listar() {
-    //         return  this.rutaService.listar();
-    //     }
-    //     @GetMapping(path="buscar/{id}")
-    //     public  Ruta BuscarPorId(@PathVariable Integer id) {
-    //         Ruta actual = this.rutaService.obtener(id);
-    //     return actual;
-    //     }
+   
     
     @PostMapping("/registrar")
     public ResponseEntity<Object> registrarRuta(@RequestBody RutaDTO rutaDTO) {
@@ -86,29 +66,7 @@ public class RutaController {
         return ResponseEntity.ok(response);
     }
           
-    // public ResponseEntity<Object> actualizarPorId(@PathVariable Integer id, @RequestBody Ruta nuevo) {
-    //     String mensaje;
-    //     Ruta actual = this.rutaService.obtener(id);
-        
-    //     if (actual != null) {   
-    //         actual.setDistancia(nuevo.getDistancia());
-    //         actual.setDuracion(nuevo.getDuracion());
-    //         actual.setEstadoRuta(nuevo.getEstadoRuta());
-    //         // Actualiza las relaciones si es necesario
-    //         actual.setTerminalOrigen(nuevo.getTerminalOrigen());
-    //         actual.setTerminalDestino(nuevo.getTerminalDestino());
-    //         actual.setAdministrador(nuevo.getAdministrador());
-
-    //         this.rutaService.guardar(actual);
-    //         mensaje = "Ruta actualizada correctamente"; // Mensaje de éxito
-    //     } else {
-    //         mensaje = "No se pudo actualizar la ruta"; // Mensaje de error
-    //     }
-        
-    //     Map<String, String> response = new HashMap<>();
-    //     response.put("message", mensaje);
-    //     return ResponseEntity.ok(response);
-    // }
+   
     @GetMapping("/listar")
         public List<Ruta> listar() {
             return  this.rutaService.listar();

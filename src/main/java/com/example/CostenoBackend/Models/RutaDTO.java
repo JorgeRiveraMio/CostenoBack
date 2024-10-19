@@ -1,6 +1,5 @@
 package com.example.CostenoBackend.Models;
 
-import java.sql.Time;
 
 public class RutaDTO {
   private Integer distancia;

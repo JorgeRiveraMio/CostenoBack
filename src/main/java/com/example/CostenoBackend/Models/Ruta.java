@@ -1,7 +1,7 @@
 package com.example.CostenoBackend.Models;
 
 import jakarta.persistence.*;
-import java.sql.Time;
+
 
 
 @Entity
