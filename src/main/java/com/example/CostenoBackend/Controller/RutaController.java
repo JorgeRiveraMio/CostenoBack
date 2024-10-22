@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CostenoBackend.Models.Ruta;
-import com.example.CostenoBackend.Models.Terminal;
+
 import com.example.CostenoBackend.Services.RutaService;
 
 

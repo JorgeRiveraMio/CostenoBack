@@ -12,11 +12,15 @@ public class Asiento {
     @Column(name = "idAsiento")
     private Integer idAsiento;
 
+    @Column(name = "tipoAsiento")
+    private String tipoAsiento;
+
+    @Column(name = "numPiso")
+    private int numeroPiso;
+    
     @Column(name = "numAsiento")
     private Integer numAsiento;
 
-    @Column(name = "tipoAsiento")
-    private String tipoAsiento;
 
     //fk de estado de asiento
     @ManyToOne
@@ -27,4 +31,54 @@ public class Asiento {
     @ManyToOne
     @JoinColumn(name = "idBus", referencedColumnName = "idBus")
     private Bus bus;
+
+    public Integer getIdAsiento() {
+        return idAsiento;
+    }
+
+    public void setIdAsiento(Integer idAsiento) {
+        this.idAsiento = idAsiento;
+    }
+
+    public String getTipoAsiento() {
+        return tipoAsiento;
+    }
+
+    public void setTipoAsiento(String tipoAsiento) {
+        this.tipoAsiento = tipoAsiento;
+    }
+
+    public int getNumeroPiso() {
+        return numeroPiso;
+    }
+
+    public void setNumeroPiso(int numeroPiso) {
+        this.numeroPiso = numeroPiso;
+    }
+
+    public Integer getNumAsiento() {
+        return numAsiento;
+    }
+
+    public void setNumAsiento(Integer numAsiento) {
+        this.numAsiento = numAsiento;
+    }
+
+    public EstadoAsiento getEstadoAsiento() {
+        return estadoAsiento;
+    }
+
+    public void setEstadoAsiento(EstadoAsiento estadoAsiento) {
+        this.estadoAsiento = estadoAsiento;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
+
+    
 }
