@@ -81,6 +81,50 @@ public class BusService {
         }
         return msgError;
     }
-
+    public String alternarEstadoBusPorId(Integer idBus) {
+        String msgError = "";
+    
+        // Verificar si el bus existe por ID
+        Bus busExistente = busRepository.findById(idBus)
+                .orElse(null);
+    
+        if (busExistente == null) {
+            msgError = "El bus con el ID " + idBus + " no se encuentra registrado.";
+            return msgError;
+        }
+    
+        try {
+            // Obtener el estado actual del bus
+            EstadoBus estadoActual = busExistente.getEstadoBus();
+    
+            // Verificar si el estado actual es "Activo" o "Inactivo"
+            EstadoBus nuevoEstadoBus;
+            if (estadoActual.getEstado().equalsIgnoreCase("Activo")) {
+                // Cambiar a "Inactivo"
+                nuevoEstadoBus = estadoBusRepository.findByEstado("Inactivo")
+                        .orElseThrow(() -> new IllegalArgumentException("EstadoBus 'Inactivo' no encontrado"));
+            } else if (estadoActual.getEstado().equalsIgnoreCase("Inactivo")) {
+                // Cambiar a "Activo"
+                nuevoEstadoBus = estadoBusRepository.findByEstado("Activo")
+                        .orElseThrow(() -> new IllegalArgumentException("EstadoBus 'Activo' no encontrado"));
+            } else {
+                // Si el estado no es ni "Activo" ni "Inactivo", lanzar un error
+                throw new IllegalArgumentException("Estado actual no es válido para alternar.");
+            }
+    
+            // Actualizar el estado del bus
+            busExistente.setEstadoBus(nuevoEstadoBus);
+    
+            // Guardar el bus actualizado
+            busRepository.save(busExistente);
+    
+        } catch (Exception e) {
+            // Manejo de errores, rollback automático
+            msgError = e.getMessage();
+        }
+    
+        return msgError;
+    }
+    
 
 }
