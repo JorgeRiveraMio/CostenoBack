@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,18 +74,27 @@ public class ChoferController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/cambiar-estado/{id}/{nuevoEstado}")
-        public ResponseEntity<Object> cambiarEstado(@PathVariable Integer id, @PathVariable boolean nuevoEstado) {
-            Chofer choferActualizado = choferService.cambiarEstado(id, nuevoEstado);
-            Map<String, String> response = new HashMap<>();
+    @PutMapping(path = "actualizarEstado/{id}")
+    public ResponseEntity<Object> actualizarEstado(@PathVariable Integer id) {
+        String mensaje;
+        Chofer actual = this.choferService.obtener(id);
 
-            if (choferActualizado != null) {
-                response.put("message", "Estado del chofer actualizado correctamente");
-                return ResponseEntity.ok(response);
+        if (actual != null) {
+            if (actual.isEstado()) {  
+                actual.setEstado(false); 
+                mensaje = "El estado pasó a inactivo";
             } else {
-                response.put("message", "No se pudo actualizar el estado del chofer");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+                actual.setEstado(true); 
+                mensaje = "El estado pasó a activo";
             }
+            this.choferService.guardar(actual);  
+        } else {
+            mensaje = "El estado no se actualizó correctamente";  
+        }
+        // Crear un mapa para la respuesta
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response); 
     }
 
 }
