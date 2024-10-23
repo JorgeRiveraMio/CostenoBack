@@ -25,13 +25,14 @@ public class BusController {
     @Autowired
     private BusService busService;
     @PostMapping("/registrar")
+
     public ResponseEntity<?> registrar(@RequestBody Bus bus) {
         ResponseEntity<?> mensajeError = busService.guardar(bus);
-        
-        if (mensajeError.getStatusCode() == HttpStatus.CREATED) {
-            return new ResponseEntity<>("Bus creado exitosamente", HttpStatus.CREATED);
+
+        if (mensajeError.getStatusCode() == HttpStatus.BAD_REQUEST) {
+            return mensajeError;
         } else {
-            return mensajeError; 
+            return ResponseEntity.status(HttpStatus.CREATED).body("Bus registrado con éxito");
         }
     }
     

@@ -67,7 +67,7 @@ public class BusService {
                 Asiento asiento = new Asiento();
                 asiento.setBus(bus);
                 asiento.setNumAsiento(i);
-                asiento.setEstadoAsiento(null); // O podrías dejarlo como `EstadoAsiento.DEFAULT`
+                asiento.setEstadoAsiento(null);
                 asiento.setNumeroPiso(i <= capacidadPiso1 ? 1 : 2);
                 asientos.add(asiento);
             }
@@ -78,9 +78,9 @@ public class BusService {
             return ResponseEntity.badRequest().body(errorResponse);
         }
         
-        // Respuesta exitosa en formato JSON
-        Map<String, String> successResponse = new HashMap<>();
+        Map<String, Object> successResponse = new HashMap<>();
         successResponse.put("message", "Bus registrado con éxito");
+        successResponse.put("idBus", bus.getIdBus()); 
         return ResponseEntity.ok(successResponse);
     }
 
