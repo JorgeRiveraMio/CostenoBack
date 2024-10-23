@@ -1,10 +1,12 @@
 package com.example.CostenoBackend.Controller;
 
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,28 +24,38 @@ import com.example.CostenoBackend.Services.BusService;
 public class BusController {
     @Autowired
     private BusService busService;
-
     @PostMapping("/registrar")
-    public ResponseEntity<String> registrar(@RequestBody Bus bus) {
-        String mensajeError = busService.guardar(bus);
+    public ResponseEntity<?> registrar(@RequestBody Bus bus) {
+        ResponseEntity<?> mensajeError = busService.guardar(bus);
         
-        if (mensajeError.isEmpty()) {
+        if (mensajeError.getStatusCode() == HttpStatus.CREATED) {
             return new ResponseEntity<>("Bus creado exitosamente", HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(mensajeError, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping(path = "actualizarEstado/{id}")
-    public ResponseEntity<String> actualizarEstado(@PathVariable Integer id) {
-        String mensajeError = busService.alternarEstadoBusPorId(id);
-        
-        if (mensajeError.isEmpty()) {
-            return new ResponseEntity<>("Bus cambio de estado", HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(mensajeError, HttpStatus.BAD_REQUEST);
+            return mensajeError; 
         }
     }
     
- 
+
+    @GetMapping("/listar")
+    public List<Bus> listar() {
+        return this.busService.listar();
+    }
+
+    @GetMapping("/buscar/{id}")
+    public Bus buscarPorId(@PathVariable Integer id) {
+        return this.busService.obtener(id);
+    }
+
+    @PutMapping(path = "actualizarEstado/{id}")
+    public ResponseEntity<?> actualizarEstado(@PathVariable Integer id) {
+        ResponseEntity<?> mensajeError = busService.alternarEstadoBusPorId(id);
+        
+        if (mensajeError.getStatusCode() == HttpStatus.OK) {
+            return new ResponseEntity<>("Cambio de estado del bus exitoso", HttpStatus.OK);
+        } else {
+            return mensajeError; 
+        }
+    }
+    
+    
 }
