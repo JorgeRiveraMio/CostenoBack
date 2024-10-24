@@ -1,8 +1,10 @@
 package com.example.CostenoBackend.Controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +77,13 @@ public class ViajeController {
     public List<Viaje> listar() {
         return  viajeService.listar();
     }
-    
+
+    @GetMapping("/buscar")
+public List<Viaje> buscarViajes(
+        @RequestParam("fechaSalida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaSalida,
+        @RequestParam("fechaLlegada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaLlegada,
+        @RequestParam("idRuta") Long idRuta) {
+    return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
+}
+
 }

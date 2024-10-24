@@ -1,5 +1,6 @@
 package com.example.CostenoBackend.Services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,9 @@ public class ViajeService {
         
         public Viaje obtener(Integer id) {
             return viajeRepository.findById(id).orElse(null);
+        }
+
+        public List<Viaje> buscarViajes(Date fechaSalida, Date fechaLlegada, Long idRuta) {
+            return viajeRepository.buscarViajes(fechaSalida, fechaLlegada, idRuta);
         }
 }
