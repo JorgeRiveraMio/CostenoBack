@@ -16,6 +16,8 @@ import com.example.CostenoBackend.Repository.AsientoRepository;
 import com.example.CostenoBackend.Repository.BusRepository;
 import com.example.CostenoBackend.Repository.EstadoBusRepository;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 @Service
 public class BusService {
     @Autowired
@@ -35,54 +37,50 @@ public class BusService {
         return busRepository.findById(id).orElse(null);
     }
 
-    public ResponseEntity<?> guardar(Bus bus) {
+    public ResponseEntity<?> guardar(@RequestBody Bus bus) {
         Map<String, String> errorResponse = new HashMap<>();
-
-        // Validación de entrada
+    
         if (bus.getPlaca() == null || bus.getCapacidadPiso1() < 0 || bus.getCapacidadPiso2() < 0) {
             errorResponse.put("message", "Datos inválidos para el bus");
-            return ResponseEntity.badRequest().body(errorResponse);
+            return ResponseEntity.badRequest().body(errorResponse); 
         }
-
-        // Comprobación de placa existente
+    
         if (busRepository.existsByPlaca(bus.getPlaca())) {
             errorResponse.put("message", "El número de placa ya se encuentra registrado");
-            return ResponseEntity.badRequest().body(errorResponse);
+            return ResponseEntity.badRequest().body(errorResponse); 
         }
-
+    
         try {
-            // Obtener el estado del bus
             EstadoBus estadoBus = estadoBusRepository.findById(bus.getEstadoBus().getIdEstadoBus())
                     .orElseThrow(() -> new IllegalArgumentException("EstadoBus no encontrado"));
-            bus.setEstadoBus(estadoBus);
-            busRepository.save(bus);
-
-            // Crear asientos
+            bus.setEstadoBus(estadoBus);        
+            Bus savedBus = busRepository.save(bus); 
+    
             List<Asiento> asientos = new ArrayList<>();
-            int capacidadPiso1 = bus.getCapacidadPiso1();
-            int capacidadPiso2 = bus.getCapacidadPiso2();
+            int capacidadPiso1 = savedBus.getCapacidadPiso1();
+            int capacidadPiso2 = savedBus.getCapacidadPiso2();
             int totalAsientos = capacidadPiso1 + capacidadPiso2;
-
+    
             for (int i = 1; i <= totalAsientos; i++) {
                 Asiento asiento = new Asiento();
-                asiento.setBus(bus);
+                asiento.setBus(savedBus); 
                 asiento.setNumAsiento(i);
-                asiento.setEstadoAsiento(null);
+                asiento.setEstadoAsiento(null); 
                 asiento.setNumeroPiso(i <= capacidadPiso1 ? 1 : 2);
                 asientos.add(asiento);
             }
             asientoRepository.saveAll(asientos);
+            
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Bus registrado correctamente");
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
             errorResponse.put("message", e.getMessage());
-            return ResponseEntity.badRequest().body(errorResponse);
+            return ResponseEntity.badRequest().body(errorResponse); 
         }
-        
-        Map<String, Object> successResponse = new HashMap<>();
-        successResponse.put("message", "Bus registrado con éxito");
-        successResponse.put("idBus", bus.getIdBus()); 
-        return ResponseEntity.ok(successResponse);
     }
+    
 
     public ResponseEntity<?> alternarEstadoBusPorId(Integer idBus) {
         Map<String, String> errorResponse = new HashMap<>();
@@ -98,7 +96,6 @@ public class BusService {
             EstadoBus estadoActual = busExistente.getEstadoBus();
             EstadoBus nuevoEstadoBus;
 
-            // Alternar estado sin buscar "Inactivo" o "Activo"
             nuevoEstadoBus = (estadoActual.getEstado().equalsIgnoreCase("Activo")) ? 
                 estadoBusRepository.findByEstado("Inactivo").orElse(null) :
                 estadoBusRepository.findByEstado("Activo").orElse(null);
@@ -115,9 +112,9 @@ public class BusService {
             return ResponseEntity.badRequest().body(errorResponse);
         }
 
-        // Respuesta exitosa en formato JSON
         Map<String, String> successResponse = new HashMap<>();
         successResponse.put("message", "Estado del bus actualizado con éxito");
         return ResponseEntity.ok(successResponse);
     }
 }
+

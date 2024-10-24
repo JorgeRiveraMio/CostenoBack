@@ -2,6 +2,9 @@ package com.example.CostenoBackend.Controller;
 
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +28,18 @@ public class BusController {
     @Autowired
     private BusService busService;
     @PostMapping("/registrar")
-
     public ResponseEntity<?> registrar(@RequestBody Bus bus) {
-        ResponseEntity<?> mensajeError = busService.guardar(bus);
+    ResponseEntity<?> mensajeError = busService.guardar(bus);
 
-        if (mensajeError.getStatusCode() == HttpStatus.BAD_REQUEST) {
-            return mensajeError;
-        } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Bus registrado con éxito");
-        }
+    if (mensajeError.getStatusCode() == HttpStatus.BAD_REQUEST) {
+        return mensajeError;
+    } else {
+        // Crear un objeto JSON para la respuesta
+        Map<String, String> successResponse = new HashMap<>();
+        successResponse.put("message", "Bus registrado con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
+}
     
 
     @GetMapping("/listar")
@@ -52,7 +57,10 @@ public class BusController {
         ResponseEntity<?> mensajeError = busService.alternarEstadoBusPorId(id);
         
         if (mensajeError.getStatusCode() == HttpStatus.OK) {
-            return new ResponseEntity<>("Cambio de estado del bus exitoso", HttpStatus.OK);
+            // Crear un objeto JSON para la respuesta
+            Map<String, String> successResponse = new HashMap<>();
+            successResponse.put("message", "Cambio de estado del bus exitoso");
+            return ResponseEntity.ok(successResponse);
         } else {
             return mensajeError; 
         }
@@ -60,3 +68,4 @@ public class BusController {
     
     
 }
+
