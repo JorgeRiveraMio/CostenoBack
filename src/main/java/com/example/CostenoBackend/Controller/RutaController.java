@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CostenoBackend.Models.Administrador;
@@ -132,5 +133,9 @@ public ResponseEntity<Object> actualizarPorId(@PathVariable Integer id, @Request
         Map<String, String> response = new HashMap<>();
         response.put("message", mensaje);
         return ResponseEntity.ok(response);  // Retornar la respuesta con el mensaje
+    }
+      @GetMapping("/buscar")
+    public List<Ruta> buscarRutaPorTerminales(@RequestParam String nombreOrigen, @RequestParam String nombreDestino) {
+        return rutaService.buscarRutaPorTerminales(nombreOrigen, nombreDestino);
     }
 }

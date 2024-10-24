@@ -26,4 +26,7 @@ public class RutaService {
         public Ruta obtener(Integer id) {
             return rutaRepository.findById(id).orElse(null);
         }
+        public List<Ruta> buscarRutaPorTerminales(String nombreOrigen, String nombreDestino) {
+            return rutaRepository.buscarRutaPorTerminales(nombreOrigen, nombreDestino);
+        }
 }
