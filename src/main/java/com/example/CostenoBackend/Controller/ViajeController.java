@@ -1,6 +1,8 @@
 package com.example.CostenoBackend.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,6 @@ import com.example.CostenoBackend.Models.Viaje;
 import com.example.CostenoBackend.Models.ViajeDTO;
 import com.example.CostenoBackend.Services.ViajeService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/viaje")
@@ -29,18 +29,17 @@ public class ViajeController {
     @Autowired
     private ViajeService viajeService;
 
-     @PostMapping("/registrar")
-    public ResponseEntity<String> registrarViaje(@RequestBody ViajeDTO viajeDTO) {
+    @PostMapping("/registrar")
+    public ResponseEntity<Map<String, String>> registrarViaje(@RequestBody ViajeDTO viajeDTO) {
+        Map<String, String> response = new HashMap<>();
         try {
             Viaje viaje = new Viaje();
 
-            // Convertimos el DTO a la entidad Viaje
             viaje.setFechaSalida(viajeDTO.getFechaSalida());
             viaje.setFechaLlegada(viajeDTO.getFechaLlegada());
             viaje.setHoraSalida(viajeDTO.getHoraSalida());
             viaje.setHoraLlegada(viajeDTO.getHoraLlegada());
 
-            // Asignamos las relaciones basadas en los IDs
             Ruta ruta = new Ruta();
             ruta.setIdRuta(viajeDTO.getIdRuta());
             viaje.setRuta(ruta);
@@ -61,19 +60,19 @@ public class ViajeController {
             chofer2.setIdPersona(viajeDTO.getIdChofer2());
             viaje.setChofer2(chofer2);
 
-            // Guardamos el viaje usando el servicio
             viajeService.guardar(viaje);
 
-            return ResponseEntity.ok("Viaje registrado correctamente");
+            response.put("message", "Viaje registrado correctamente");
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al registrar el viaje: " + e.getMessage());
+            response.put("error", "Error al registrar el viaje: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
         }
     }
 
     @GetMapping("/listar")
     public List<Viaje> listar() {
-        return  viajeService.listar();
+        return viajeService.listar();
     }
-    
 }
