@@ -135,7 +135,7 @@ public ResponseEntity<Object> actualizarPorId(@PathVariable Integer id, @Request
         return ResponseEntity.ok(response);  // Retornar la respuesta con el mensaje
     }
       @GetMapping("/buscar")
-    public List<Ruta> buscarRutaPorTerminales(@RequestParam String nombreOrigen, @RequestParam String nombreDestino) {
+    public Ruta buscarRutaPorTerminales(@RequestParam String nombreOrigen, @RequestParam String nombreDestino) {
         return rutaService.buscarRutaPorTerminales(nombreOrigen, nombreDestino);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.CostenoBackend.Controller;
 
-<<<<<<< HEAD
+
 import java.util.Date;
-=======
+
 import java.util.HashMap;
->>>>>>> d1296555524cf2833af3301cd02d9bff8195ce4c
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CostenoBackend.Models.Administrador;
@@ -80,16 +81,15 @@ public class ViajeController {
     public List<Viaje> listar() {
         return viajeService.listar();
     }
-<<<<<<< HEAD
+
 
     @GetMapping("/buscar")
-public List<Viaje> buscarViajes(
-        @RequestParam("fechaSalida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaSalida,
-        @RequestParam("fechaLlegada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaLlegada,
-        @RequestParam("idRuta") Long idRuta) {
-    return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
-}
+    public List<Viaje> buscarViajes(
+            @RequestParam("fechaSalida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaSalida,
+            @RequestParam("fechaLlegada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaLlegada,
+            @RequestParam("idRuta") Long idRuta) {
+        return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
+    }
 
-=======
->>>>>>> d1296555524cf2833af3301cd02d9bff8195ce4c
+
 }

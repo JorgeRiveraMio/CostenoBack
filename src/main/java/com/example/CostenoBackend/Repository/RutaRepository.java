@@ -11,5 +11,5 @@ import com.example.CostenoBackend.Models.Ruta;
 
 public interface RutaRepository extends JpaRepository<Ruta,Integer>{
      @Query("SELECT r FROM Ruta r WHERE r.terminalOrigen.nombre = :nombreOrigen AND r.terminalDestino.nombre = :nombreDestino")
-    List<Ruta> buscarRutaPorTerminales(@Param("nombreOrigen") String nombreOrigen, @Param("nombreDestino") String nombreDestino);
+  Ruta buscarRutaPorTerminales(@Param("nombreOrigen") String nombreOrigen, @Param("nombreDestino") String nombreDestino);
 }
