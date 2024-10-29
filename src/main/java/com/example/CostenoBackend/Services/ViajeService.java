@@ -29,6 +29,7 @@ public class ViajeService {
         }
 
         public List<Viaje> buscarViajes(Date fechaSalida, Date fechaLlegada, Long idRuta) {
+            System.out.println("Buscando viajes con - Fecha Salida: " + fechaSalida + ", Fecha Llegada: " + fechaLlegada + ", ID Ruta: " + idRuta);
             return viajeRepository.buscarViajes(fechaSalida, fechaLlegada, idRuta);
         }
 }

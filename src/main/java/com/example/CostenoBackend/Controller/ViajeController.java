@@ -87,7 +87,7 @@ public class ViajeController {
     public List<Viaje> buscarViajes(
             @RequestParam("fechaSalida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaSalida,
             @RequestParam("fechaLlegada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaLlegada,
-            @RequestParam("idRuta") Long idRuta) {
+            @RequestParam("idRuta") Long idRuta) {        
         return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
     }
 
