@@ -16,7 +16,7 @@ public class Asiento {
     private String tipoAsiento;
 
     @Column(name = "numPiso")
-    private int numeroPiso;
+    private int numPiso;
     
     @Column(name = "numAsiento")
     private Integer numAsiento;
@@ -49,11 +49,11 @@ public class Asiento {
     }
 
     public int getNumeroPiso() {
-        return numeroPiso;
+        return numPiso;
     }
 
     public void setNumeroPiso(int numeroPiso) {
-        this.numeroPiso = numeroPiso;
+        this.numPiso = numeroPiso;
     }
 
     public Integer getNumAsiento() {

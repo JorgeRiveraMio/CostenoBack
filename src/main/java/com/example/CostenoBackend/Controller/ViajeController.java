@@ -26,6 +26,7 @@ import com.example.CostenoBackend.Models.Viaje;
 import com.example.CostenoBackend.Models.ViajeDTO;
 import com.example.CostenoBackend.Services.ViajeService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/viaje")
@@ -91,5 +92,10 @@ public class ViajeController {
         return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
     }
 
+ 
+    @GetMapping("/buscar/{id}")
+    public Viaje buscarPorId(@PathVariable Integer id) {
+        return this.viajeService.obtener(id);
+    }
 
 }

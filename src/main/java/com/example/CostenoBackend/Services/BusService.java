@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.CostenoBackend.Models.Asiento;
 import com.example.CostenoBackend.Models.Bus;
+import com.example.CostenoBackend.Models.EstadoAsiento;
 import com.example.CostenoBackend.Models.EstadoBus;
 import com.example.CostenoBackend.Repository.AsientoRepository;
 import com.example.CostenoBackend.Repository.BusRepository;
+import com.example.CostenoBackend.Repository.EstadoAsientoRepository;
 import com.example.CostenoBackend.Repository.EstadoBusRepository;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -28,6 +30,9 @@ public class BusService {
 
     @Autowired
     private EstadoBusRepository estadoBusRepository;
+
+    @Autowired
+    private EstadoAsientoRepository estadoAsientoRepository;
 
     public List<Bus> listar() {
         return busRepository.findAll();
@@ -55,7 +60,9 @@ public class BusService {
                     .orElseThrow(() -> new IllegalArgumentException("EstadoBus no encontrado"));
             bus.setEstadoBus(estadoBus);        
             Bus savedBus = busRepository.save(bus); 
-    
+    // Obtener el estado "libre" para los asientos
+            EstadoAsiento estadoLibre = estadoAsientoRepository.findByEstado("Libre")
+                .orElseThrow(() -> new IllegalArgumentException("EstadoAsiento 'libre' no encontrado"));
             List<Asiento> asientos = new ArrayList<>();
             int capacidadPiso1 = savedBus.getCapacidadPiso1();
             int capacidadPiso2 = savedBus.getCapacidadPiso2();
@@ -65,7 +72,7 @@ public class BusService {
                 Asiento asiento = new Asiento();
                 asiento.setBus(savedBus); 
                 asiento.setNumAsiento(i);
-                asiento.setEstadoAsiento(null); 
+                asiento.setEstadoAsiento(estadoLibre); 
                 asiento.setNumeroPiso(i <= capacidadPiso1 ? 1 : 2);
                 asientos.add(asiento);
             }
