@@ -50,6 +50,6 @@ public class Comprobante {
 
       //fk comprobante
       @ManyToOne
-      @JoinColumn(name = "idBoleto", referencedColumnName = "idBoleto")
-      private Boleto boleto; 
+    @JoinColumn(name = "idBoleto", referencedColumnName = "idBoleto")
+    private Boleto boleto; 
 }
