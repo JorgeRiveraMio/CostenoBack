@@ -47,4 +47,9 @@ public class Comprobante {
     @ManyToOne
     @JoinColumn(name = "idEstadoComprobante", referencedColumnName = "idEstadoComprobante")
     private EstadoComprobante estadoComprobante;
+
+      //fk comprobante
+      @ManyToOne
+      @JoinColumn(name = "idBoleto", referencedColumnName = "idBoleto")
+      private Boleto boleto; 
 }

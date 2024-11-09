@@ -13,4 +13,16 @@ public class EstadoAsiento {
 
     @Column(name = "estado")
     private String estado;
+
+    
+    public EstadoAsiento() {
+    }
+
+
+    public EstadoAsiento(Integer idEstadoAsiento, String estado) {
+        this.idEstadoAsiento = idEstadoAsiento;
+        this.estado = estado;
+    }
+
+    
 }

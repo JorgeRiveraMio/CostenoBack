@@ -14,6 +14,15 @@ public class EstadoBus {
     @Column(name = "estado")
     private String estado;
 
+    
+    public EstadoBus() {
+    }
+
+    public EstadoBus(Integer idEstadoBus, String estado) {
+        this.idEstadoBus = idEstadoBus;
+        this.estado = estado;
+    }
+
     public Integer getIdEstadoBus() {
         return idEstadoBus;
     }

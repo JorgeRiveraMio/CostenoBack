@@ -61,7 +61,7 @@ public class BusService {
             bus.setEstadoBus(estadoBus);        
             Bus savedBus = busRepository.save(bus); 
     // Obtener el estado "libre" para los asientos
-            EstadoAsiento estadoLibre = estadoAsientoRepository.findByEstado("Libre")
+            EstadoAsiento estadoLibre = estadoAsientoRepository.findByEstado("LIBRE")
                 .orElseThrow(() -> new IllegalArgumentException("EstadoAsiento 'libre' no encontrado"));
             List<Asiento> asientos = new ArrayList<>();
             int capacidadPiso1 = savedBus.getCapacidadPiso1();
@@ -103,9 +103,9 @@ public class BusService {
             EstadoBus estadoActual = busExistente.getEstadoBus();
             EstadoBus nuevoEstadoBus;
 
-            nuevoEstadoBus = (estadoActual.getEstado().equalsIgnoreCase("Activo")) ? 
-                estadoBusRepository.findByEstado("Inactivo").orElse(null) :
-                estadoBusRepository.findByEstado("Activo").orElse(null);
+            nuevoEstadoBus = (estadoActual.getEstado().equalsIgnoreCase("ACTIVO")) ? 
+                estadoBusRepository.findByEstado("DESACTIVO").orElse(null) :
+                estadoBusRepository.findByEstado("ACTIVO").orElse(null);
             
             if (nuevoEstadoBus == null) {
                 throw new IllegalArgumentException("EstadoBus no encontrado para alternar.");
