@@ -22,8 +22,13 @@ public class BoletoService {
     @Autowired
     private EstadoBoletoRepository estadoBoletoRepository; ///
 
-      public List<Boleto> listar() {
+    public List<Boleto> listar() {
         return boletoRepository.findAll();
+    }
+
+     // Método para listar los boletos de un cliente específico
+    public List<Boleto> listarPorCliente(Integer idCliente) {
+        return boletoRepository.findByClienteId(idCliente);
     }
 
     public Boleto obtener(Integer id) {

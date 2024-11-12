@@ -66,6 +66,12 @@ public class BoletoController {
         return this.boletoService.listar();
     }
 
+     // Método para listar los boletos de un cliente específico
+    @GetMapping("/listar/{idCliente}")
+    public List<Boleto> listarPorCliente(@PathVariable Integer idCliente) {
+        return this.boletoService.listarPorCliente(idCliente);
+    }
+
     @GetMapping("/buscar/{id}")
     public Boleto buscarPorId(@PathVariable Integer id) {
         return this.boletoService.obtener(id);
