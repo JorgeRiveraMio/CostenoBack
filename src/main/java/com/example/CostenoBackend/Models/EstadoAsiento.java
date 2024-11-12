@@ -24,5 +24,26 @@ public class EstadoAsiento {
         this.estado = estado;
     }
 
+
+    public Integer getIdEstadoAsiento() {
+        return idEstadoAsiento;
+    }
+
+
+    public void setIdEstadoAsiento(Integer idEstadoAsiento) {
+        this.idEstadoAsiento = idEstadoAsiento;
+    }
+
+
+    public String getEstado() {
+        return estado;
+    }
+
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
     
 }
