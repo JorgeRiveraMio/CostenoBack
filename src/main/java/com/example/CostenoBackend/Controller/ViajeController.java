@@ -46,6 +46,7 @@ public class ViajeController {
             viaje.setFechaLlegada(viajeDTO.getFechaLlegada());
             viaje.setHoraSalida(viajeDTO.getHoraSalida());
             viaje.setHoraLlegada(viajeDTO.getHoraLlegada());
+            viaje.setPrecio(viajeDTO.getPrecio());
 
             Ruta ruta = new Ruta();
             ruta.setIdRuta(viajeDTO.getIdRuta());

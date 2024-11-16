@@ -25,6 +25,9 @@ public class Viaje {
     @Column(name = "horaLlegada")
     private Time horaLlegada;
 
+    @Column(name = "precio")
+    private Double precio;
+
     //fk ruta
     @ManyToOne
     @JoinColumn(name = "idRuta", referencedColumnName = "idRuta")
@@ -55,13 +58,34 @@ public class Viaje {
     }
     
 
-    public Viaje(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada, Ruta ruta,
-            Administrador administrador, Bus bus, Chofer chofer1, Chofer chofer2) {
+    // public Viaje(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada, Ruta ruta,
+    //         Administrador administrador, Bus bus, Chofer chofer1, Chofer chofer2) {
+    //     this.idViaje = idViaje;
+    //     this.fechaSalida = fechaSalida;
+    //     this.fechaLlegada = fechaLlegada;
+    //     this.horaSalida = horaSalida;
+    //     this.horaLlegada = horaLlegada;
+    //     this.ruta = ruta;
+    //     this.administrador = administrador;
+    //     this.bus = bus;
+    //     this.chofer1 = chofer1;
+    //     this.chofer2 = chofer2;
+    // }
+    
+
+
+    public Integer getIdViaje() {
+        return idViaje;
+    }
+
+    public Viaje(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada, Double precio,
+            Ruta ruta, Administrador administrador, Bus bus, Chofer chofer1, Chofer chofer2) {
         this.idViaje = idViaje;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
+        this.precio = precio;
         this.ruta = ruta;
         this.administrador = administrador;
         this.bus = bus;
@@ -69,10 +93,6 @@ public class Viaje {
         this.chofer2 = chofer2;
     }
 
-
-    public Integer getIdViaje() {
-        return idViaje;
-    }
 
     public void setIdViaje(Integer idViaje) {
         this.idViaje = idViaje;
@@ -150,5 +170,16 @@ public class Viaje {
         this.chofer2 = chofer2;
     }
 
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    
     
 }

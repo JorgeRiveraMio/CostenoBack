@@ -1,10 +1,10 @@
 package com.example.CostenoBackend.Controller;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import com.example.CostenoBackend.Models.Boleto;
 import com.example.CostenoBackend.Models.BoletoDTO;
 import com.example.CostenoBackend.Models.Bus;
 import com.example.CostenoBackend.Models.Cliente;
-import com.example.CostenoBackend.Models.EstadoBoleto;
+
 import com.example.CostenoBackend.Models.Viaje;
 import com.example.CostenoBackend.Services.BoletoService;
 
