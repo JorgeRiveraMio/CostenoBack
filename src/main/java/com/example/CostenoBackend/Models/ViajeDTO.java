@@ -3,7 +3,7 @@ package com.example.CostenoBackend.Models;
 import java.sql.Time;
 import java.util.Date;
 
-import jakarta.persistence.Column;
+
 
 public class ViajeDTO {
      private Integer idViaje;
