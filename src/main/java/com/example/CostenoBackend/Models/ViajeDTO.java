@@ -13,23 +13,29 @@ public class ViajeDTO {
     private Time horaLlegada;
 
     private Double precio;
+    private String estadoViaje;
     private Integer idRuta;
     private Integer idAdministrador;
     private Integer idBus;
     private Integer idChofer1;
     private Integer idChofer2;
+  
 
     
     public ViajeDTO() {
     }
     
+
+
     // public ViajeDTO(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada,
-    //         Integer idRuta, Integer idAdministrador, Integer idBus, Integer idChofer1, Integer idChofer2) {
+    //         Double precio, Integer idRuta, Integer idAdministrador, Integer idBus, Integer idChofer1,
+    //         Integer idChofer2) {
     //     this.idViaje = idViaje;
     //     this.fechaSalida = fechaSalida;
     //     this.fechaLlegada = fechaLlegada;
     //     this.horaSalida = horaSalida;
     //     this.horaLlegada = horaLlegada;
+    //     this.precio = precio;
     //     this.idRuta = idRuta;
     //     this.idAdministrador = idAdministrador;
     //     this.idBus = idBus;
@@ -41,9 +47,10 @@ public class ViajeDTO {
     public Integer getIdViaje() {
         return idViaje;
     }
+
     public ViajeDTO(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada,
-            Double precio, Integer idRuta, Integer idAdministrador, Integer idBus, Integer idChofer1,
-            Integer idChofer2) {
+            Double precio, Integer idRuta, Integer idAdministrador, Integer idBus, Integer idChofer1, Integer idChofer2,
+            String estadoViaje) {
         this.idViaje = idViaje;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
@@ -55,7 +62,10 @@ public class ViajeDTO {
         this.idBus = idBus;
         this.idChofer1 = idChofer1;
         this.idChofer2 = idChofer2;
+        this.estadoViaje = estadoViaje;
     }
+
+
 
     public void setIdViaje(Integer idViaje) {
         this.idViaje = idViaje;
@@ -121,6 +131,18 @@ public class ViajeDTO {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+
+
+    public String getEstadoViaje() {
+        return estadoViaje;
+    }
+
+
+
+    public void setEstadoViaje(String estadoViaje) {
+        this.estadoViaje = estadoViaje;
     }
 
     
