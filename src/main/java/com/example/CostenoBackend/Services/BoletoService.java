@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.CostenoBackend.Models.Boleto;
-import com.example.CostenoBackend.Models.Bus;
+
 import com.example.CostenoBackend.Models.EstadoBoleto;
 import com.example.CostenoBackend.Repository.BoletoRepository;
 import com.example.CostenoBackend.Repository.EstadoBoletoRepository;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 @Service
 public class BoletoService {
