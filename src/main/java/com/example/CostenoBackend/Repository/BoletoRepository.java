@@ -16,5 +16,7 @@ public interface BoletoRepository extends JpaRepository<Boleto, Integer> {
     @Query("SELECT b FROM Boleto b JOIN b.viaje v WHERE v.fechaSalida <= :fechaHoraActual AND b.estadoBoleto.idEstadoBoleto = 1")
     List<Boleto> findBoletosVencidos(@Param("fechaHoraActual") LocalDateTime fechaHoraActual);
 
+    @Query(value = "SELECT * FROM boleto WHERE idBoleto = :idBoleto", nativeQuery = true)
+    Boleto findBoletoById(@Param("idBoleto") Integer idBoleto);
 
 }

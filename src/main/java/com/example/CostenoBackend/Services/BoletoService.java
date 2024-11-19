@@ -32,7 +32,9 @@ public class BoletoService {
     }
 
     public Boleto obtener(Integer id) {
-        return boletoRepository.findById(id).orElse(null);
+        Boleto boleto = boletoRepository.findBoletoById(id);
+        System.out.println("ID del boleto obtenido: " + (boleto != null ? boleto.getIdBoleto() : "No encontrado"));
+        return boleto;
     }
 
     public ResponseEntity<Map<String, String>> guardar(Boleto boleto) {
@@ -40,12 +42,17 @@ public class BoletoService {
         try {
             EstadoBoleto estadoActivo = estadoBoletoRepository.findByEstado("ACTIVO")
                 .orElseThrow(() -> new IllegalArgumentException("EstadoBoleto 'Activo' no encontrado"));
-                    
+            
             boleto.setEstadoBoleto(estadoActivo);
     
-            boletoRepository.save(boleto);
+            // Guarda el boleto en la base de datos
+            Boleto boletoGuardado = boletoRepository.save(boleto);
     
+            // Agregar el ID del boleto al mapa de respuesta
             response.put("message", "Boleto registrado correctamente");
+            response.put("idBoleto", String.valueOf(boletoGuardado.getIdBoleto()));  // Incluir el idBoleto
+    
+            // Devolver el mapa con el mensaje y el ID del boleto
             return ResponseEntity.ok(response);
     
         } catch (Exception e) {
@@ -53,6 +60,8 @@ public class BoletoService {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    
 
     public List<Boleto> actualizarBoletosVencidos() {
         LocalDateTime ahora = LocalDateTime.now();
