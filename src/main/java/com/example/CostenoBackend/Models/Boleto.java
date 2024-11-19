@@ -1,7 +1,10 @@
 package com.example.CostenoBackend.Models;
 
 import java.sql.Time;
-import java.util.*;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,8 +20,9 @@ public class Boleto {
     private Double precio;
 
     @Column(name = "fechaEmision")
-    private Date fechaEmision;
+    private LocalDate  fechaEmision;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(name = "horaEmision")
     private Time horaEmision;
 
@@ -63,11 +67,11 @@ public class Boleto {
         this.precio = precio;
     }
 
-    public Date getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
@@ -118,7 +122,4 @@ public class Boleto {
     public void setEstadoBoleto(EstadoBoleto estadoBoleto) {
         this.estadoBoleto = estadoBoleto;
     }
-
- 
-  
 }

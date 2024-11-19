@@ -76,4 +76,10 @@ public class BoletoController {
     public Boleto buscarPorId(@PathVariable Integer id) {
         return this.boletoService.obtener(id);
     }
+
+    @GetMapping("/actualizarVencidos")
+    public ResponseEntity<String> actualizarBoletosVencidos() {
+        List<Boleto> boletosActualizados = boletoService.actualizarBoletosVencidos();
+        return ResponseEntity.ok("Se actualizaron " + boletosActualizados.size() + " boletos a INACTIVO.");
+    }
 }

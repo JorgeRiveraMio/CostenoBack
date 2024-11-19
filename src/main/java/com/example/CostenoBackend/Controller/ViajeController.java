@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,7 @@ public class ViajeController {
             viaje.setHoraSalida(viajeDTO.getHoraSalida());
             viaje.setHoraLlegada(viajeDTO.getHoraLlegada());
             viaje.setPrecio(viajeDTO.getPrecio());
+            viaje.setEstadoViaje(viajeDTO.getEstadoViaje());
 
             Ruta ruta = new Ruta();
             ruta.setIdRuta(viajeDTO.getIdRuta());
@@ -98,5 +100,30 @@ public class ViajeController {
     public Viaje buscarPorId(@PathVariable Integer id) {
         return this.viajeService.obtener(id);
     }
+      @PutMapping(path = "actualizarEstado/{id}")
+    public ResponseEntity<Object> actualizarEstado(@PathVariable Integer id) {
+        String mensaje;
+        Viaje actual = this.viajeService.obtener(id);
+    
+        if (actual != null) {
+            if (actual.getEstadoViaje().equals("activo")) {  // Comparación correcta con equals()
+                actual.setEstadoViaje("inactivo");
+                mensaje = "El estado pasó a inactivo";
+            } else {
+                actual.setEstadoViaje("activo");
+                mensaje = "El estado pasó a activo";
+            }
+    
+            this.viajeService.guardar(actual);  // Guardar el estado actualizado
+        } else {
+            mensaje = "El estado no se actualizó correctamente";  // Mensaje de error
+        }
+    
+        // Crear un mapa para la respuesta
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response);  // Retornar la respuesta con el mensaje
+    }
+
 
 }

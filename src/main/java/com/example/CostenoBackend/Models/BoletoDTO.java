@@ -1,14 +1,15 @@
 package com.example.CostenoBackend.Models;
 
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BoletoDTO {
     private Integer idBoleto;
     private Double precio;
-    private Date fechaEmision;
+    private LocalDate  fechaEmision;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     private Time horaEmision;  // Cambiado a Date si planeas manejar hora en formato fecha simple
 
@@ -20,7 +21,7 @@ public class BoletoDTO {
 
     public BoletoDTO() {
     }
-    public BoletoDTO(Integer idBoleto, Double precio, Date fechaEmision, Time horaEmision, Integer idCliente,
+    public BoletoDTO(Integer idBoleto, Double precio, LocalDate fechaEmision, Time horaEmision, Integer idCliente,
             Integer idViaje, Integer idAsiento, Integer idBus, Integer idEstadoBoleto) {
         this.idBoleto = idBoleto;
         this.precio = precio;
@@ -44,10 +45,10 @@ public class BoletoDTO {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
-    public Date getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
     public Time getHoraEmision() {

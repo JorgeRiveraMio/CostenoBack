@@ -1,4 +1,5 @@
 package com.example.CostenoBackend.Services;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -6,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.CostenoBackend.Models.Boleto;
+
 import com.example.CostenoBackend.Models.EstadoBoleto;
 import com.example.CostenoBackend.Repository.BoletoRepository;
 import com.example.CostenoBackend.Repository.EstadoBoletoRepository;
+
 
 @Service
 public class BoletoService {
@@ -49,6 +52,20 @@ public class BoletoService {
             response.put("message", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    public List<Boleto> actualizarBoletosVencidos() {
+        LocalDateTime ahora = LocalDateTime.now();
+        List<Boleto> boletosVencidos = boletoRepository.findBoletosVencidos(ahora);
+    
+        for (Boleto boleto : boletosVencidos) {
+            EstadoBoleto estadoInactivo = new EstadoBoleto();
+            estadoInactivo.setIdEstadoBoleto(2); 
+            boleto.setEstadoBoleto(estadoInactivo); 
+            boletoRepository.save(boleto);
+        }
+    
+        return boletosVencidos;
     }
     
 }
