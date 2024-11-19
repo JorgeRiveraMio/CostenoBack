@@ -28,6 +28,8 @@ public class Viaje {
     @Column(name = "precio")
     private Double precio;
 
+    @Column(name = "estadoViaje")
+    private String estadoViaje;
     //fk ruta
     @ManyToOne
     @JoinColumn(name = "idRuta", referencedColumnName = "idRuta")
@@ -57,27 +59,6 @@ public class Viaje {
     public Viaje() {
     }
     
-
-    // public Viaje(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada, Ruta ruta,
-    //         Administrador administrador, Bus bus, Chofer chofer1, Chofer chofer2) {
-    //     this.idViaje = idViaje;
-    //     this.fechaSalida = fechaSalida;
-    //     this.fechaLlegada = fechaLlegada;
-    //     this.horaSalida = horaSalida;
-    //     this.horaLlegada = horaLlegada;
-    //     this.ruta = ruta;
-    //     this.administrador = administrador;
-    //     this.bus = bus;
-    //     this.chofer1 = chofer1;
-    //     this.chofer2 = chofer2;
-    // }
-    
-
-
-    public Integer getIdViaje() {
-        return idViaje;
-    }
-
     public Viaje(Integer idViaje, Date fechaSalida, Date fechaLlegada, Time horaSalida, Time horaLlegada, Double precio,
             Ruta ruta, Administrador administrador, Bus bus, Chofer chofer1, Chofer chofer2) {
         this.idViaje = idViaje;
@@ -92,6 +73,14 @@ public class Viaje {
         this.chofer1 = chofer1;
         this.chofer2 = chofer2;
     }
+
+    
+    
+
+    public Integer getIdViaje() {
+        return idViaje;
+    }
+
 
 
     public void setIdViaje(Integer idViaje) {
@@ -178,6 +167,14 @@ public class Viaje {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public String getEstadoViaje() {
+        return estadoViaje;
+    }
+
+    public void setEstadoViaje(String estadoViaje) {
+        this.estadoViaje = estadoViaje;
     }
 
     
