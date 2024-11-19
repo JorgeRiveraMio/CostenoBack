@@ -2,13 +2,16 @@ package com.example.CostenoBackend.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.CostenoBackend.Domain.Authenticate;
+import com.example.CostenoBackend.Infra.MailManager;
 import com.example.CostenoBackend.Models.Cliente;
 import com.example.CostenoBackend.Services.ClienteService;
 
@@ -26,6 +29,9 @@ public class ClienteController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MailManager mailManager;
 
     // Un mapa temporal para guardar clientes pendientes de verificación
     private final Map<String, String> verificationCodes = new HashMap<>(); // Email -> Código
@@ -116,28 +122,29 @@ public class ClienteController {
         response.put("message", mensaje);
         return ResponseEntity.ok(response);
     }
+
+
     @PutMapping(path="/cambiarContrasena")
-    public ResponseEntity<Object> actualizarContrasena(@RequestBody Map<String, String> datos) {
-    String mensaje;
-    String password = datos.get("password");
-    String correo = datos.get("correo");
+    public ResponseEntity<Object> cambiarContrasena(@RequestBody Map<String, String> datos) {
+        String mensaje;
+        String correo = datos.get("correo");
+        Cliente actual = this.clienteService.obtenerUsuario(correo);
+        if (actual != null) {
+            String contrasenaTemporal = mailManager.generarContrasenaTemporal();
 
-    Cliente actual = this.clienteService.obtenerUsuario(correo);
-    if (actual != null) {
-        // Encriptar la nueva contraseña
-        String passwordEncriptado = passwordEncoder.encode(password);
-        actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
-        
-        this.clienteService.Guardar(actual);
-        mensaje = "Cliente actualizó contraseña"; // Mensaje de éxito
-    } else {
-        mensaje = "No se pudo actualizar contraseña"; // Mensaje de error
+            String contrasenaEnviada = mailManager.sendTemporaryPassword(correo, contrasenaTemporal);
+
+            String contrasenaEncriptada = passwordEncoder.encode(contrasenaEnviada);
+            actual.setPassword(contrasenaEncriptada); 
+
+            this.clienteService.Guardar(actual);
+            mensaje = "Se ha enviado una contraseña temporal al correo.";
+        } else {
+            mensaje = "No se encontró un usuario con ese correo."; 
+        }
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response);
     }
-
-    Map<String, String> response = new HashMap<>();
-    response.put("message", mensaje);
-    return ResponseEntity.ok(response);
-}
-
-
 }

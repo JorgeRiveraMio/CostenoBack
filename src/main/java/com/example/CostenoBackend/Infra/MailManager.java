@@ -63,4 +63,37 @@ public class MailManager {
     private String setCodeInTemplate(String templateCode, int index, String number) {
         return templateCode.replace("{" + index + "}", number);
     }
+
+    public String generarContrasenaTemporal() {
+        Random random = new Random();
+        int longitud = 8;
+        StringBuilder contrasena = new StringBuilder();
+        for (int i = 0; i < longitud; i++) {
+            contrasena.append((char) (random.nextInt(26) + 'a')); 
+        }
+        return contrasena.toString();
+    }
+
+    public String sendTemporaryPassword(String emailUser, String password) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        String content = MessageHTMLContra.TEMPLATE_CONTRASENA_TEMPORAL; // Nueva plantilla para la contraseña temporal
+    
+        try {
+            message.setSubject("Tu contraseña temporal");
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(emailUser);
+            
+            // Insertar la contraseña temporal en el contenido del mensaje
+            content = content.replace("{password}", password);
+    
+            helper.setText(content, true);
+            helper.setFrom(sender);
+            javaMailSender.send(message);
+    
+            return password;  // Retorna la contraseña temporal
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
