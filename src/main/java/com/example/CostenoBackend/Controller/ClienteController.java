@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.CostenoBackend.Domain.Authenticate;
 import com.example.CostenoBackend.Infra.MailManager;
 import com.example.CostenoBackend.Models.Cliente;
+import com.example.CostenoBackend.Models.ClienteDTO;
 import com.example.CostenoBackend.Services.ClienteService;
 
 
@@ -98,30 +99,36 @@ public class ClienteController {
     }    
 
     @PutMapping(path="/{id}")
-    public ResponseEntity<Object>  actualizarPorId(@PathVariable Integer id, @RequestBody Cliente nuevo) {
-        String mensaje;
+public ResponseEntity<Object> actualizarPorId(@PathVariable Integer id, @RequestBody ClienteDTO nuevo) {
+    String mensaje;
 
-        Cliente actual = this.clienteService.Obtener(id);
-        if (actual != null) {
-            // Encriptar la nueva contraseña
-            // String passwordEncriptado = passwordEncoder.encode(nuevo.getPassword());
-          
-            actual.setEstadoCivil(nuevo.getEstadoCivil());
-            actual.setDireccion(nuevo.getDireccion());
-            actual.setNumTel(nuevo.getNumTel());
-            actual.setFechaNac(nuevo.getFechaNac());
-            // actual.setPassword(passwordEncriptado); // Establece la contraseña encriptada
-            
-            this.clienteService.Guardar(actual);
-            mensaje = "Cliente actualizado correctamente"; // Mensaje de éxito
-        } else {
-            mensaje = "No se pudo actualizar el cliente"; // Mensaje de error
+    Cliente actual = this.clienteService.Obtener(id);
+    if (actual != null) {
+        // Verificar si se proporcionó una nueva contraseña
+        if (nuevo.getPassword() != null && !nuevo.getPassword().isEmpty()) {
+            String passwordEncriptado = passwordEncoder.encode(nuevo.getPassword());
+            actual.setPassword(passwordEncriptado);  // Establecer la nueva contraseña encriptada
         }
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", mensaje);
-        return ResponseEntity.ok(response);
+        // Actualizar los demás campos
+        if (nuevo.getCorreo() != null) actual.setCorreo(nuevo.getCorreo());
+        if (nuevo.getEstadoCivil() != null) actual.setEstadoCivil(nuevo.getEstadoCivil());
+        if (nuevo.getDireccion() != null) actual.setDireccion(nuevo.getDireccion());
+        if (nuevo.getNumTel() != null) actual.setNumTel(nuevo.getNumTel());
+        if (nuevo.getFechaNac() != null) actual.setFechaNac(nuevo.getFechaNac());
+
+        // Guardar el cliente actualizado
+        this.clienteService.Guardar(actual);
+        mensaje = "Cliente actualizado correctamente"; // Mensaje de éxito
+    } else {
+        mensaje = "No se pudo actualizar el cliente"; // Mensaje de error
     }
+
+    Map<String, String> response = new HashMap<>();
+    response.put("message", mensaje);
+    return ResponseEntity.ok(response);
+}
+
 
 
     @PutMapping(path="/cambiarContrasena")
@@ -129,22 +136,24 @@ public class ClienteController {
         String mensaje;
         String correo = datos.get("correo");
         Cliente actual = this.clienteService.obtenerUsuario(correo);
+    
         if (actual != null) {
             String contrasenaTemporal = mailManager.generarContrasenaTemporal();
-
             String contrasenaEnviada = mailManager.sendTemporaryPassword(correo, contrasenaTemporal);
-
             String contrasenaEncriptada = passwordEncoder.encode(contrasenaEnviada);
             actual.setPassword(contrasenaEncriptada); 
-
             this.clienteService.Guardar(actual);
             mensaje = "Se ha enviado una contraseña temporal al correo.";
+    
+            Map<String, String> response = new HashMap<>();
+            response.put("message", mensaje);
+            return ResponseEntity.ok(response);  
         } else {
             mensaje = "No se encontró un usuario con ese correo."; 
+    
+            Map<String, String> response = new HashMap<>();
+            response.put("message", mensaje);
+            return ResponseEntity.badRequest().body(response);  
         }
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", mensaje);
-        return ResponseEntity.ok(response);
     }
 }

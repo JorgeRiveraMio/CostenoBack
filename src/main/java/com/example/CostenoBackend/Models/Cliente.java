@@ -74,6 +74,8 @@ public class Cliente extends Persona implements UserDetails{
         return authorities;
     }
 
+    
+
     @Override
     public String getUsername() {
         return this.correo;
