@@ -1,4 +1,5 @@
 package com.example.CostenoBackend.Services;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,20 @@ public class BoletoService {
             response.put("message", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    public List<Boleto> actualizarBoletosVencidos() {
+        LocalDateTime ahora = LocalDateTime.now();
+        List<Boleto> boletosVencidos = boletoRepository.findBoletosVencidos(ahora);
+    
+        for (Boleto boleto : boletosVencidos) {
+            EstadoBoleto estadoInactivo = new EstadoBoleto();
+            estadoInactivo.setIdEstadoBoleto(2); 
+            boleto.setEstadoBoleto(estadoInactivo); 
+            boletoRepository.save(boleto);
+        }
+    
+        return boletosVencidos;
     }
     
 }

@@ -122,7 +122,4 @@ public class Boleto {
     public void setEstadoBoleto(EstadoBoleto estadoBoleto) {
         this.estadoBoleto = estadoBoleto;
     }
-
- 
-  
 }
