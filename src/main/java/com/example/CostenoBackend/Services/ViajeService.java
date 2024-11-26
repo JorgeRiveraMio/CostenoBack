@@ -32,5 +32,10 @@ public class ViajeService {
             System.out.println("Buscando viajes con - Fecha Salida: " + fechaSalida + ", Fecha Llegada: " + fechaLlegada + ", ID Ruta: " + idRuta);
             return viajeRepository.buscarViajes(fechaSalida, fechaLlegada, idRuta);
         }
+
+            
+        public List<Viaje> buscarProximosViajes(Date fechaSalida, Long idRuta) {
+            return viajeRepository.buscarProximosViajes(fechaSalida, idRuta);
+        }
         
 }

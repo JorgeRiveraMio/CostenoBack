@@ -95,6 +95,14 @@ public class ViajeController {
         return viajeService.buscarViajes(fechaSalida, fechaLlegada, idRuta);
     }
 
+    @GetMapping("/buscarProximos")  // nuevo para mostrar todos los viajes proximos
+    public List<Viaje> buscarProximosViajes(
+            @RequestParam("fechaSalida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaSalida,
+            @RequestParam("idRuta") Long idRuta) {
+        return viajeService.buscarProximosViajes(fechaSalida, idRuta);
+    }
+
+
  
     @GetMapping("/buscar/{id}")
     public Viaje buscarPorId(@PathVariable Integer id) {
